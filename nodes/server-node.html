@@ -1,0 +1,107 @@
+<script type="text/html" data-template-name="server-node">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-server"></i> Config name</label>
+        <input type="text" id="node-config-input-name" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-url"><i class="fa fa-globe"></i> URL</label>
+        <input type="text" id="node-config-input-url" placeholder="openapi.tuyaeu.com" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-client_id"><i class="fa fa-id-card-o"></i> Cliend ID</label>
+        <input type="text" id="node-config-input-client_id" placeholder="pp432yvd43gdfgbpp" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-secret"><i class="fa fa-user-secret"></i> Secret</label>
+        <input type="text" id="node-config-input-secret" placeholder="nb4trhrsw56tw45bhq5q423q" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-user_id"><i class="fa fa-user"></i> User ID</label>
+        <input type="text" id="node-config-input-user_id" placeholder="eu37623433234" />
+    </div>
+    <br />
+    <div class="form-row">
+        <label for="node-config-input-retry_time"><i class="fa fa-clock-o"></i> Interval time (s)</label>
+        <input type="text" id="node-config-input-retry_time" placeholder="250" />
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-retry_time_active"><i class="fa fa-clock-o"></i> Interval active</label>
+        <input
+            type="checkbox"
+            id="node-config-input-retry_time_active"
+            style="display: inline-block; width: auto; vertical-align: top;" />
+    </div>
+    <br />
+    <div class="form-row">
+        <label for="node-config-input-debug"><i class="fa fa-bug"></i> Debug</label>
+        <input
+            type="checkbox"
+            id="node-config-input-debug"
+            style="display: inline-block; width: auto; vertical-align: top;" />
+    </div>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType("server-node", {
+        category: "config",
+        defaults: {
+            name: { value: "Tuya Config", required: true },
+            connected: { value: false },
+            retry_time: { value: "10" },
+            retry_time_active: { value: true },
+            debug: { value: false }
+        },
+        oneditprepare: function () {
+            $("#node-config-input-url").typedInput({
+                types: [
+                    {
+                        value: "url",
+                        options: [
+                            { value: "https://openapi.tuyacn.com", label: "China Data Center" },
+                            { value: "https://openapi.tuyaus.com", label: "Western America Data Center" },
+                            { value: "https://openapi-ueaz.tuyaus.com", label: "Eastern America Data Center" },
+                            { value: "https://openapi.tuyaeu.com", label: "Central Europe Data Center" },
+                            { value: "https://openapi-weaz.tuyaeu.com", label: "Western Europe Data Center" },
+                            { value: "https://openapi.tuyain.com", label: "India Data Center" }
+                        ]
+                    }
+                ]
+            });
+            $("#node-config-input-retry_time_active").on("click", function () {
+                if (this.checked == true) {
+                    debug = true;
+                    $("#node-config-input-retry_time_active").removeClass("selected");
+                } else {
+                    debug = false;
+                    $(this).addClass("selected");
+                }
+            });
+            $("#node-config-input-debug").on("click", function () {
+                if (this.checked == true) {
+                    debug = true;
+                    $("#node-config-input-debug").removeClass("selected");
+                } else {
+                    debug = false;
+                    $(this).addClass("selected");
+                }
+            });
+        },
+        credentials: {
+            url: { type: "text" },
+            client_id: { type: "text", required: true },
+            secret: { type: "text", required: true },
+            user_id: { type: "text", required: true },
+            access_token: { type: "text" },
+            refresh_token: { type: "text" },
+            retry_time: { type: "text" },
+            token_expire_time: { type: "text" },
+            device_id: { type: "text" },
+
+            devices: { type: "text" },
+            homes: { type: "text" },
+            scenes: { type: "text" }
+        },
+        label: function () {
+            return this.name || "Tuya Config";
+        }
+    });
+</script>

@@ -1,0 +1,148 @@
+<script type="text/html" data-template-name="scene-node">
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Server</label>
+        <select id="node-input-server"></select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-home"><i class="fa fa-home"></i> Home</label>
+        <select id="node-input-home"></select> 
+        <button id="node-input-home-refresh" class="red-ui-button"><i class="fa fa-refresh"></i></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-scene"><i class="fa fa-check-square"></i> Scene</label>
+        <select id="node-input-scene"></select> 
+        <button id="node-input-scene-refresh" class="red-ui-button"><i class="fa fa-refresh"></i></button>
+    </div>
+    <div class="form-row">
+        <label for="node-input-debug"><i class="fa fa-bug"></i> Debug</label>
+        <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" />
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType("scene-node", {
+        inputs: 1,
+        outputs: 1,
+        label: function () {
+            return this.scene_name || "Tuya Scene";
+        },
+        paletteLabel: "Tuya Scene",
+        category: "TUYA Cloud Bridge",
+        color: "#ff4800",
+        icon: "tuya-api-icon.png",
+        defaults: {
+            server: { value: "", type: "server-node", required: true },
+            home_id: { value: "" },
+            home_name: { value: "", required: true },
+            scene_id: { value: "" },
+            scene_name: { value: "", required: true },
+            debug: { value: false }
+        },
+
+        oneditprepare: function () {
+            let homeSelect = $("#node-input-home");
+            let sceneSelect = $("#node-input-scene");
+            homeSelect.empty();
+            sceneSelect.empty();
+
+            let selectedHome = this.home_id || "";
+            let selectedScene = this.scene_id || "";
+
+            // Homes laden
+            $.getJSON("/getHomes", function (homes) {
+                homeSelect.empty();
+                if (homes.length === 0) {
+                    homeSelect.append($("<option></option>").attr("value", "").text("Keine Geräte gefunden"));
+                } else {
+                    homeSelect.append($("<option></option>").attr("value", "").text(""));
+                    homes.forEach((home) => {
+                        homeSelect.append(
+                            $("<option></option>")
+                                .attr("value", home.home_id)
+                                .text(home.name)
+                        );
+                    });
+
+                    // Gespeicherten Wert wiederherstellen
+                    if (selectedHome) homeSelect.val(selectedHome);
+                }
+            });
+
+            // Scenes laden
+            $.getJSON("/getScenes", function (scenes) {
+                sceneSelect.empty();
+                if (scenes.length === 0) {
+                    sceneSelect.append($("<option></option>").attr("value", "").text("Keine Szenen gefunden"));
+                } else {
+                    sceneSelect.append($("<option></option>").attr("value", "").text(""));
+                    scenes.forEach((scene) => {
+                        sceneSelect.append(
+                            $("<option></option>")
+                                .attr("value", scene.scene_id)
+                                .text(scene.name)
+                        );
+                    });
+
+                    // Gespeicherten Wert wiederherstellen
+                    if (selectedScene) sceneSelect.val(selectedScene);
+                }
+            });
+
+            // Refresh Buttons
+            $("#node-input-home-refresh").on("click", function (e) {
+                e.preventDefault();
+                $.getJSON("/refreshHomes", function (homes) {
+                    homeSelect.empty();
+                    if (homes.length === 0) {
+                        homeSelect.append($("<option></option>").attr("value", "").text("Keine Geräte gefunden"));
+                    } else {
+                        homeSelect.append($("<option></option>").attr("value", "").text(""));
+                        homes.forEach((home) => {
+                            homeSelect.append(
+                                $("<option></option>")
+                                    .attr("value", home.home_id)
+                                    .text(home.name)
+                            );
+                        });
+                        if (selectedHome) homeSelect.val(selectedHome);
+                    }
+                });
+            });
+
+            $("#node-input-scene-refresh").on("click", function (e) {
+                e.preventDefault();
+                $.getJSON("/refreshScenes", function (scenes) {
+                    sceneSelect.empty();
+                    if (scenes.length === 0) {
+                        sceneSelect.append($("<option></option>").attr("value", "").text("Keine Szenen gefunden"));
+                    } else {
+                        sceneSelect.append($("<option></option>").attr("value", "").text(""));
+                        scenes.forEach((scene) => {
+                            sceneSelect.append(
+                                $("<option></option>")
+                                    .attr("value", scene.scene_id)
+                                    .text(scene.name)
+                            );
+                        });
+                        if (selectedScene) sceneSelect.val(selectedScene);
+                    }
+                });
+            });
+
+            $("#node-input-debug").on("click", function () {
+                $(this).toggleClass("selected");
+            });
+        },
+
+        oneditsave: function () {
+            if ($("#node-input-home option:selected").text() !== "") {
+                this.home_id = $("#node-input-home").val();
+                this.home_name = $("#node-input-home option:selected").text();
+            }
+            if ($("#node-input-scene option:selected").text() !== "") {
+                this.scene_id = $("#node-input-scene").val();
+                this.scene_name = $("#node-input-scene option:selected").text();
+            }
+        }
+    });
+</script>

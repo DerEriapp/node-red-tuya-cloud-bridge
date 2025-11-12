@@ -1,0 +1,37 @@
+{
+  "name": "@dereriapp/node-red-tuya-cloud-bridge",
+  "version": "1.0.0",
+  "description": "Node-RED nodes for Tuya Cloud Devices and Scenes",
+  "license": "MIT",
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DerEriapp/node-red-tuya-cloud-bridge"
+  },
+  "bugs": {
+    "url": "https://github.com/DerEriapp/node-red-tuya-cloud-bridge/issues"
+  },
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "https://paypal.me/dereriapp"
+    }
+  ],
+  
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "node-fetch": "^3.3.1"
+  },
+  "keywords": [ 
+    "node-red", 
+    "tuya" 
+  ],
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "server-node": "nodes/server-node.js",
+      "device-node": "nodes/device-node.js",
+      "scene-node": "nodes/scene-node.js"
+    }
+  }
+}

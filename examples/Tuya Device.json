@@ -1,0 +1,254 @@
+[
+    {
+        "id": "a98cd0f6cad1f4c2",
+        "type": "group",
+        "z": "6bf1e8c0eccf1489",
+        "style": {
+            "stroke": "#999999",
+            "stroke-opacity": "1",
+            "fill": "none",
+            "fill-opacity": "1",
+            "label": true,
+            "label-position": "nw",
+            "color": "#a4a4a4"
+        },
+        "nodes": [
+            "b192e3bbe5e6c833",
+            "7a8e87238f403abc",
+            "47f1264ac516b105",
+            "5501f33807b7c4e4",
+            "c36a72b3b5a7be9f",
+            "5eaba8d1a40470b0",
+            "8ce8fa5ee668c62e",
+            "9afc79bb77ae9442",
+            "1a821510d7b953ae"
+        ],
+        "x": 114,
+        "y": 79,
+        "w": 732,
+        "h": 242
+    },
+    {
+        "id": "b192e3bbe5e6c833",
+        "type": "inject",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "ECO",
+        "props": [
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "sign_url",
+                "v": "/v1.0/devices/{{device_id}}/commands",
+                "vt": "str"
+            },
+            {
+                "p": "body",
+                "v": "{\"commands\":[{\"code\":\"mode\",\"value\":\"eco\"}]}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "1a821510d7b953ae",
+            ]
+        ]
+    },
+    {
+        "id": "7a8e87238f403abc",
+        "type": "switch",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "IsSucces",
+        "property": "success",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "false"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "5501f33807b7c4e4"
+            ],
+            [
+                "47f1264ac516b105"
+            ]
+        ]
+    },
+    {
+        "id": "47f1264ac516b105",
+        "type": "debug",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "False",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5501f33807b7c4e4",
+        "type": "debug",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "True",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "c36a72b3b5a7be9f",
+        "type": "debug",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "Response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "5eaba8d1a40470b0",
+        "type": "comment",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "Set Staus",
+        "info": "\n# **Input**\n## **method**\n\n## **sign_url**\n    \n## **Header**\n    Im Header sind die wichtigstens daten bereits vorhanden.\n    Diese daten sind bereits im Header enthalten:\n        `\n        sign_method: \"HMAC-SHA256\",\n        client_id: client_id,\n        t: time.toString(),\n        sign: signStr.toUpperCase(),\n        access_token: access_token,\n\n        //mode: \"cors\",\n        \"Content-Type\": \"application/json\"\n        `\n## **Body**\n    ",
+        "x": 200,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8ce8fa5ee668c62e",
+        "type": "inject",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "Comfort",
+        "props": [
+            {
+                "p": "method",
+                "v": "POST",
+                "vt": "str"
+            },
+            {
+                "p": "sign_url",
+                "v": "/v1.0/devices/{{device_id}}/commands",
+                "vt": "str"
+            },
+            {
+                "p": "body",
+                "v": "{\"commands\":[{\"code\":\"mode\",\"value\":\"Comfort\"}]}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 210,
+        "y": 220,
+        "wires": [
+            [
+                "1a821510d7b953ae"
+            ]
+        ]
+    },
+    {
+        "id": "9afc79bb77ae9442",
+        "type": "inject",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "name": "Get Status",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 220,
+        "y": 280,
+        "wires": [
+            [
+                "1a821510d7b953ae"
+            ]
+        ]
+    },
+    {
+        "id": "1a821510d7b953ae",
+        "type": "device-node",
+        "z": "6bf1e8c0eccf1489",
+        "g": "a98cd0f6cad1f4c2",
+        "server": "7992d30fabb11231",
+        "device_name": "Büro Heizung",
+        "device_id": "bf6cf551f24e4bdd69imkm",
+        "interval_time": "60",
+        "interval_active": false,
+        "debug": false,
+        "x": 420,
+        "y": 220,
+        "wires": [
+            [
+                "7a8e87238f403abc",
+                "c36a72b3b5a7be9f"
+            ]
+        ]
+    },
+    {
+        "id": "7992d30fabb11231",
+        "type": "server-node",
+        "name": "Tuya Config",
+        "retry_time": "250",
+        "retry_time_active": true,
+        "debug": false
+    },
+    {
+        "id": "176682de9aaca528",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-tuya-bridge": "1.0.0"
+        }
+    }
+]

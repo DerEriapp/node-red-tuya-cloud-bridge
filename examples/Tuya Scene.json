@@ -1,0 +1,134 @@
+[
+    {
+        "id": "1339d9f65c267243",
+        "type": "group",
+        "z": "6bf1e8c0eccf1489",
+        "name": "Tuya Scene",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "3d92cc06c8a74f96",
+            "5f0f16ef8bd0aee9",
+            "a559a221bea24908",
+            "493cfd2c4badfb29",
+            "2857b9f39e696ac1"
+        ],
+        "x": 234,
+        "y": 419,
+        "w": 572,
+        "h": 142
+    },
+    {
+        "id": "3d92cc06c8a74f96",
+        "type": "scene-node",
+        "z": "6bf1e8c0eccf1489",
+        "g": "1339d9f65c267243",
+        "server": "7992d30fabb11231",
+        "home_id": "228282860",
+        "home_name": "Unsere Wohnung",
+        "scene_id": "MYX74tXjzSqRnuU4",
+        "scene_name": "Ladekabel AN",
+        "debug": true,
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "a559a221bea24908"
+            ]
+        ]
+    },
+    {
+        "id": "5f0f16ef8bd0aee9",
+        "type": "scene-node",
+        "z": "6bf1e8c0eccf1489",
+        "g": "1339d9f65c267243",
+        "server": "7992d30fabb11231",
+        "home_id": "228282860",
+        "home_name": "Unsere Wohnung",
+        "scene_id": "DkbJABk0DamVOYGz",
+        "scene_name": "Ladekabel AUS",
+        "debug": true,
+        "x": 500,
+        "y": 520,
+        "wires": [
+            [
+                "a559a221bea24908"
+            ]
+        ]
+    },
+    {
+        "id": "a559a221bea24908",
+        "type": "debug",
+        "z": "6bf1e8c0eccf1489",
+        "g": "1339d9f65c267243",
+        "name": "Scene debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "493cfd2c4badfb29",
+        "type": "inject",
+        "z": "6bf1e8c0eccf1489",
+        "g": "1339d9f65c267243",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 330,
+        "y": 460,
+        "wires": [
+            [
+                "3d92cc06c8a74f96"
+            ]
+        ]
+    },
+    {
+        "id": "2857b9f39e696ac1",
+        "type": "inject",
+        "z": "6bf1e8c0eccf1489",
+        "g": "1339d9f65c267243",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 330,
+        "y": 520,
+        "wires": [
+            [
+                "5f0f16ef8bd0aee9"
+            ]
+        ]
+    },
+    {
+        "id": "7992d30fabb11231",
+        "type": "server-node",
+        "name": "Tuya Config Second",
+        "retry_time": "250",
+        "retry_time_active": true,
+        "debug": false
+    },
+    {
+        "id": "89b9dbba67240f08",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-tuya-bridge": "1.0.0"
+        }
+    }
+]
