@@ -85,7 +85,12 @@ module.exports = function (RED) {
                 //TuyaAPIrequest(device, method, sign_url, headerObj, bodyObj = "");
                 Response = await TuyaAPIrequest(node, msg.method, msg.sign_url, msg.header, msg.body);
 
-                msg.response = Response;
+                // Sende die veränderten Daten weiter
+                msg = {
+                    topic: "device-info",
+                    success: Response.success,
+                    payload: Response.data
+                };
 
                 node.send(msg);
             } else {
@@ -206,7 +211,7 @@ module.exports = function (RED) {
         const msg = {
             topic: "device-info",
             success: Response.success,
-            payload: JSON.stringify(Response.data)
+            payload: Response.data
         };
 
         node.send(msg);

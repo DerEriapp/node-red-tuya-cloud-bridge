@@ -44,19 +44,28 @@ module.exports = function (RED) {
 
                 let Response = await TuyaAPIrequest(node, msg.method, msg.sign_url, msg.header, msg.body);
 
-                msg.response = Response;
+                // Sende die veränderten Daten weiter
+                msg = null;
+                msg.topic = "scene-info";
+                msg.success = Response.success;
+                msg.payload = Response.data;
 
                 node.send(msg);
-            } else { 
+            } else {
                 //NO INPUT (Default)
                 LOGnodeRed(node, "info", "Trigger scene");
-                
+
                 let method = "POST";
                 let sign_url = "/v1.0/homes/" + node.home_id + "/scenes/" + node.scene_id + "/trigger";
 
                 let Response = await TuyaAPIrequest(node, method, sign_url);
 
-                msg.response = Response;
+                // Sende die veränderten Daten weiter
+                msg = {
+                    topic: "scene-info",
+                    success: Response.success,
+                    payload: Response.data
+                };
 
                 node.send(msg);
             }

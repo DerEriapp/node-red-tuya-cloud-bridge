@@ -1,6 +1,6 @@
 {
   "name": "@dereriapp/node-red-tuya-cloud-bridge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node-RED nodes for Tuya Cloud Devices and Scenes",
   "license": "MIT",
   
