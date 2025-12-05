@@ -316,7 +316,7 @@ async function TuyaAPIrequest(node, method, sign_url, headerObj = null, bodyObj 
         // Empty (body) String Hash (needed by TUYA)
         let content_hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
         
-        if (bodyObj != null) {
+        if (bodyObj != null && bodyObj != "") {
             content_hash = SHA256(JSON.stringify(bodyObj)); //Body in SHA256 für Header signStr
         } 
         //else {
@@ -437,9 +437,9 @@ async function FetchRequest(url, urlPath, methode, header, body, node) {
     if (body == "") {
         body = null;
     } 
-    //if (body !//= "" && body != null) {
-    //    body = JSON.stringify(body);
-    //}
+    if (body != null) {
+        body = JSON.stringify(body);
+    }
 
     var response;
 

@@ -23,6 +23,10 @@
         <label for="node-input-debug"><i class="fa fa-bug"></i> Debug</label>
         <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" />
     </div>
+    <div class="form-row">
+        <label for="node-input-returnmsg"><i class="fa fa-message-text-fast-outline"></i> If msg arrives on input, pass through to output:</label>
+        <input type="checkbox" id="node-input-returnmsg" style="display: inline-block; width: auto; vertical-align: top;" />
+    </div>
 </script>
 <script type="text/javascript">
     RED.nodes.registerType("device-node", {
@@ -41,7 +45,8 @@
             device_id: { value: "" },
             interval_time: { value: "60" },
             interval_active: { value: true },
-            debug: { value: false }
+            debug: { value: false },
+            returnmsg: { value: false }
         },
         oneditprepare: function () {
             let deviceSelect = $("#node-input-device");
@@ -107,6 +112,15 @@
                     $("#node-input-debug").removeClass("selected");
                 } else {
                     debug = false;
+                    $(this).addClass("selected");
+                }
+            });
+            $("#node-input-returnmsg").on("click", function () {
+                if (this.checked === true) {
+                    returnmsg = true;
+                    $("#node-input-debug").removeClass("selected");
+                } else {
+                    returnmsg = false;
                     $(this).addClass("selected");
                 }
             });

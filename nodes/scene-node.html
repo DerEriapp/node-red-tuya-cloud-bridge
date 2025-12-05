@@ -17,6 +17,10 @@
         <label for="node-input-debug"><i class="fa fa-bug"></i> Debug</label>
         <input type="checkbox" id="node-input-debug" style="display: inline-block; width: auto; vertical-align: top;" />
     </div>
+    <div class="form-row">
+        <label for="node-input-returnmsg"><i class="fa fa-message-text-fast-outline"></i> If msg arrives on input, pass through to output:</label>
+        <input type="checkbox" id="node-input-returnmsg" style="display: inline-block; width: auto; vertical-align: top;" />
+    </div>
 </script>
 
 <script type="text/javascript">
@@ -36,7 +40,8 @@
             home_name: { value: "", required: true },
             scene_id: { value: "" },
             scene_name: { value: "", required: true },
-            debug: { value: false }
+            debug: { value: false },
+            returnmsg: { value: false }
         },
 
         oneditprepare: function () {
@@ -130,7 +135,22 @@
             });
 
             $("#node-input-debug").on("click", function () {
-                $(this).toggleClass("selected");
+                if (this.checked === true) {
+                    debug = true;
+                    $("#node-input-debug").removeClass("selected");
+                } else {
+                    debug = false;
+                    $(this).addClass("selected");
+                }
+            });
+            $("#node-input-returnmsg").on("click", function () {
+                if (this.checked === true) {
+                    returnmsg = true;
+                    $("#node-input-debug").removeClass("selected");
+                } else {
+                    returnmsg = false;
+                    $(this).addClass("selected");
+                }
             });
         },
 

@@ -13,6 +13,7 @@ module.exports = function (RED) {
         let node = this;
         node.server = RED.nodes.getNode(device.server);
         node.debug = device.debug;
+        node.returnmsg = device.returnmsg;
         node.devices = device.devices;
         node.device_name = device.device_name;
         node.device_id = device.device_id;
@@ -92,7 +93,9 @@ module.exports = function (RED) {
                     payload: Response.data
                 };
 
-                node.send(msg);
+                if (node.returnmsg) {
+                    node.send(msg);
+                }
             } else {
                 checkState(node);
             }
@@ -204,7 +207,7 @@ module.exports = function (RED) {
 
     async function checkState(node) {
         //TuyaAPIrequest(device, method, sign_url, headerObj, bodyObj = "");
-        console.log("CheckState: " + node.device_id);
+        //console.log("CheckState: " + node.device_id);
         var Response = await TuyaAPIrequest(node, "GET", "/v1.0/devices/" + node.device_id + "/status");
 
         // Sende die veränderten Daten weiter

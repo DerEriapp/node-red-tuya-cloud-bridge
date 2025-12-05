@@ -13,6 +13,7 @@ module.exports = function (RED) {
         let node = this;
         node.server = RED.nodes.getNode(scene.server);
         node.debug = scene.debug;
+        node.returnmsg = scene.returnmsg;
         node.scenes = scene.scenes;
         node.home_id = scene.home_id;
         node.home_name = scene.home_name;
@@ -50,7 +51,9 @@ module.exports = function (RED) {
                 msg.success = Response.success;
                 msg.payload = Response.data;
 
-                node.send(msg);
+                if (node.returnmsg) {
+                    node.send(msg);
+                }
             } else {
                 //NO INPUT (Default)
                 LOGnodeRed(node, "info", "Trigger scene");
@@ -67,7 +70,9 @@ module.exports = function (RED) {
                     payload: Response.data
                 };
 
-                node.send(msg);
+                if (node.returnmsg) {
+                    node.send(msg);
+                }
             }
 
             if (done) done();
