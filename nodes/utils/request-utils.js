@@ -33,7 +33,7 @@ async function TuyaCheckToken(config) {
             TokenValid = await TuyaGetNewToken(config); //Returns if Token is Valid
         } else if (access_token != "" && token_expire_time <= time) {
             LOGnodeRed(config, "log", "REFRESH");
-            TokenValid = TuyaGetNewToken(config); //Returns if Token is Valid
+            TokenValid = await TuyaGetNewToken(config); //Returns if Token is Valid
         } else {
             LOGconsole(config, "log", "USETOKEN");
             TokenValid = true;
